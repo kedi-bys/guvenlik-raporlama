@@ -3,4 +3,98 @@ extends layout
 block content
   div.row.border-bottom.white-bg.dashboard-header
     div.col-md-4
-      h2 New Report
+      h2 Yeni Güvenlik Raporu
+
+  div.row
+    div.col-lg-12
+      div.wrapper.wrapper-content
+        div.row
+          div.col-lg-12
+            div.ibox.float-e-margins
+              div.ibox-content
+                form.form-horizontal
+                  div.form-group
+                    label.col-sm-3.control-label Olay Kategorisi
+                    div.col-sm-9
+                      select.form-control(name='category')
+                        each category in data.categories
+                          option= category.name
+
+                  div.hr-line-dashed
+
+                  div.form-group
+                    label.col-sm-3.control-label Gerçekleştiği Yer
+                    div.col-sm-9
+                      select.form-control(name='location')
+                        each location in data.categories[0].locations
+                          option= location.name
+                  
+                  div.hr-line-dashed
+
+                  div.form-group
+                    label.col-sm-3.control-label Hata Zamanı
+                    div.col-sm-9
+                      select.form-control(name='time-interval')
+                        each timeInterval in data.timeIntervals
+                          option= timeInterval.text
+
+                  div.hr-line-dashed
+
+                  div.form-group
+                    label.col-sm-3.control-label Hatayı Yapan Meslek Grubu
+                    div.col-sm-9
+                      select.form-control(name='occupational-group')
+                        each occupationalGroup in data.categories[0].occupationalGroups
+                          option= occupationalGroup.name
+                  
+                  div.hr-line-dashed
+
+                  div.form-group
+                    label.col-sm-3.control-label Hatalı İşlem
+                    div.col-sm-9
+                      select.form-control(name='incorrect-operation')
+                        each incorrectOperation in data.categories[0].incorrectOperations
+                          option= incorrectOperation.name
+
+                  div.hr-line-dashed
+
+                  div.form-group
+                    label.col-sm-3.control-label Hatalı İşlem Detayı
+                    div.col-sm-9
+                      select.form-control(name='incorrect-operation-detail')
+                        each incorrectOperationDetail in data.categories[0].incorrectOperations[0].details
+                          option= incorrectOperationDetail.name
+
+                  div.hr-line-dashed
+
+                  div.form-group
+                    label.col-sm-3.control-label Hatanın Gerçekleştiği Tarih
+                    div.col-sm-9
+                      input.form-control(type='text', name='date', required)
+
+                  div.hr-line-dashed
+
+                  div.form-group
+                    label.col-sm-3.control-label Hata Özeti
+                    div.col-sm-9
+                      textarea(required).form-control
+
+                  div.hr-line-dashed
+
+                  div.form-group
+                    label.col-sm-3.control-label Hata ile İlgili Açıklamalar
+                    div.col-sm-9
+                      textarea(required).form-control
+
+                  div.hr-line-dashed
+
+                  div.form-group
+                    label.col-sm-3.control-label Hatanın Çözümü
+                    div.col-sm-9
+                      textarea(required).form-control
+
+                  div.hr-line-dashed
+
+                  div.form-group(style='margin-bottom: 0')
+                    div.col-sm-12
+                      input.btn.btn-primary.pull-right(type='submit', value='Onaya Sun')

@@ -1,6 +1,40 @@
-extends layout
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/font-awesome/css/font-awesome.css')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    //- Toastr
+    link(rel='stylesheet', href='/stylesheets/plugins/toastr/toastr.min.css')
+    
+    link(rel='stylesheet', href='/stylesheets/animate.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
 
-block content
-  div.row.border-bottom.white-bg.dashboard-header
-    div.col-md-4
-      h2 Login
+  body.gray-bg
+
+    div.middle-box.text-center.loginscreen.animated.fadeInDown
+      div
+        div
+          h1.logo-name GRS
+        
+        h3 Güvenlik Raporlama Sistemi
+
+        p Kullanıcı bilgileriniz ile giriş yapın.
+        
+        form.m-t(role='form', action='/dashboard')
+          div.form-group
+            input.form-control(type='text', placeholder='Kullanıcı Adı', required)
+          
+          div.form-group
+            input.form-control(type='password', placeholder='Şifre', required)
+
+          button.btn.btn-primary.block.full-width.m-b(type='submit') Giriş
+        
+        p.m-t
+          small [KURUM_ADI] - 2018
+
+    script(src='/javascripts/jquery-3.1.1.min.js')
+    script(src='/javascripts/bootstrap.min.js')
+    
+    block scripts
