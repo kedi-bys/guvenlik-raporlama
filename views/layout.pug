@@ -26,19 +26,19 @@ html
                     span.text-muted.text-xs.block [KULLANICI_TITLE]
               div.logo-element GRS
             li.active
-              a(href='dashboard')
+              a(href='/')
                 i.fa.fa-th-large
                 span.labels Kontrol Paneli
             li
-              a(href='newReport')
+              a(href='/new')
                 i.fa.fa-plus
                 span.labels Yeni Rapor
             li
-              a(href='reports')
+              a(href='/reports')
                 i.fa.fa-table
                 span.labels Raporlar
             li
-              a(href='logout')
+              a(href='/logout')
                 i.fa.fa-sign-out
                 span.labels Çıkış
             
@@ -54,7 +54,7 @@ html
 
             ul.nav.navbar-top-links.navbar-right
               li
-                span.m-r-sm.text-muted.welcome-message NPİstanbul Beyin Hastanesi Güvenlik Raporlama Sistemi
+                span.m-r-sm.text-muted.welcome-message [KURUM_ADI] Güvenlik Raporlama Sistemi
               //- li.dropdown
               //-   a.dropdown-toggle.count-info(data-toggle='dropdown', href='#')
               //-     i.fa.fa-envelope
