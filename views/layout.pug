@@ -1,0 +1,92 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/font-awesome/css/font-awesome.css')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    //- Toastr
+    link(rel='stylesheet', href='/stylesheets/plugins/toastr/toastr.min.css')
+    
+    link(rel='stylesheet', href='/stylesheets/animate.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+
+  body
+    div#wrapper
+      nav.navbar-default.navbar-static-side(role='navigation')
+        div.sidebar-collapse
+          ul.nav.metismenu#side-menu
+            li.nav-header
+              div.dropdown.profile-element
+                img.img-circle(alt='image', src='/images/profile_small.jpg')
+                a.dropdown-toggle(data-toggle='dropdown', href='#')
+                  span.clear
+                    span.block.m-t-xs
+                      strong.font-bold [KULLANICI_ADI]
+                    span.text-muted.text-xs.block [KULLANICI_TITLE]
+              div.logo-element GRS
+            li.active
+              a(href='dashboard')
+                i.fa.fa-th-large
+                span.labels Kontrol Paneli
+            li
+              a(href='newReport')
+                i.fa.fa-plus
+                span.labels Yeni Rapor
+            li
+              a(href='reports')
+                i.fa.fa-table
+                span.labels Raporlar
+            li
+              a(href='logout')
+                i.fa.fa-sign-out
+                span.labels Çıkış
+            
+      div#page-wrapper.gray-bg.dashboard-1
+        div.row.border-bottom
+          nav.navbar.navbar-static-top(role='navigation', style='margin-bottom: 0')
+            div.navbar-header
+              a.navbar-minimalize.minimalize-styl-2.btn.btn-primary(href='#')
+                i.fa.fa-bars
+              form.navbar-form-custom(role='search', action='search_results.html')
+                div.form-group
+                  input#top-search.form-control(type='text', placeholder='Search for something...', name='top-search')
+
+            ul.nav.navbar-top-links.navbar-right
+              li
+                span.m-r-sm.text-muted.welcome-message NPİstanbul Beyin Hastanesi Güvenlik Raporlama Sistemi
+              //- li.dropdown
+              //-   a.dropdown-toggle.count-info(data-toggle='dropdown', href='#')
+              //-     i.fa.fa-envelope
+              li.dropdown
+                a.dropdown-toggle.count-info(data-toggle='dropdown', href='#')
+                  i.fa.fa-bell
+                  span.label.label-primary 2
+              //- li
+              //-   a(href='login.html')
+              //-     i.fa.fa-sign-out
+              //-     | Log out
+              li
+                a.right-sidebar-toggle
+                  i.fa.fa-info
+        
+        block content
+
+
+      
+      
+
+    script(src='/javascripts/jquery-3.1.1.min.js')
+    script(src='/javascripts/bootstrap.min.js')
+    script(src='/javascripts/plugins/metisMenu/jquery.metisMenu.js')
+    script(src='/javascripts/plugins/slimscroll/jquery.slimscroll.min.js')
+    script(src='/javascripts/plugins/flot/jquery.flot.js')
+    script(src='/javascripts/plugins/flot/jquery.flot.tooltip.min.js')
+    script(src='/javascripts/plugins/flot/jquery.flot.spline.js')
+    script(src='/javascripts/plugins/flot/jquery.flot.resize.js')
+    script(src='/javascripts/plugins/flot/jquery.flot.pie.js')
+
+    script(src='/javascripts/inspinia.js')
+    script(src='/javascripts/plugins/toastr/toastr.min.js')
+
+    block scripts
