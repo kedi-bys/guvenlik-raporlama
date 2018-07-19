@@ -25,18 +25,40 @@ html
                       strong.font-bold [KULLANICI_ADI]
                     span.text-muted.text-xs.block [KULLANICI_TITLE]
               div.logo-element GRS
-            li.active
-              a(href='/')
-                i.fa.fa-th-large
-                span.labels Kontrol Paneli
-            li
-              a(href='/new')
-                i.fa.fa-plus
-                span.labels Yeni Rapor
-            li
-              a(href='/reports')
-                i.fa.fa-table
-                span.labels Raporlar
+              
+            if page == 'ControlPanel'
+              li.active
+                a(href='/')
+                  i.fa.fa-th-large
+                  span.labels Kontrol Paneli
+            else
+              li
+                a(href='/')
+                  i.fa.fa-th-large
+                  span.labels Kontrol Paneli
+
+            if page == 'NewReport'
+              li.active
+                a(href='/new')
+                  i.fa.fa-plus
+                  span.labels Yeni Rapor
+            else
+              li
+                a(href='/new')
+                  i.fa.fa-plus
+                  span.labels Yeni Rapor
+
+            if page == 'Reports'
+              li.active
+                a(href='/reports')
+                  i.fa.fa-table
+                  span.labels Raporlar
+            else
+              li
+                a(href='/reports')
+                  i.fa.fa-table
+                  span.labels Raporlar
+                  
             li
               a(href='/logout')
                 i.fa.fa-sign-out
