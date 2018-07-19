@@ -1,1 +1,92 @@
 extends layout
+
+block content
+  div.row.border-bottom.white-bg.dashboard-header
+    div.col-md-4
+      h2 Raporlar
+
+  div.row
+    div.col-lg-12
+      div.wrapper.wrapper-content
+        div.row
+          div.col-lg-12
+            div.ibox.float-e-margins
+              div.ibox-content.border-bottom
+
+                div.row
+                  div.col-sm-4
+                    div.form-group
+                      label.control-label Rapor İçeriği
+                      div.input-group
+                        span.input-group-addon
+                          i.fa.fa-file-text-o
+                        input.form-control(type='text', autocomplete='off')
+
+                  div.col-sm-4
+                    div.form-group
+                      label.control-label Olay Kategorisi
+                      div.input-group
+                        span.input-group-addon
+                          i.fa.fa-tag
+                        select.form-control
+                          option Tümü
+                          option Cerrahi Güvenlik
+                          option Çalışan Güvenliği
+                          option Hasta Güvenliği
+                          option İlaç Güvenliği
+                          option Laboratuvar Güvenliği
+
+                  div.col-sm-4
+                    div.form-group
+                      label.control-label Bildiren Kişi
+                      div.input-group
+                        span.input-group-addon
+                          i.fa.fa-user
+                        input.form-control(type='text', autocomplete='off')
+
+                div.row
+                  div.col-sm-4
+                    div.form-group
+                      label.control-label Eklenme Tarihi
+                      div.input-group.date
+                        span.input-group-addon
+                          i.fa.fa-calendar
+                        input.form-control(type='text')
+                  
+                  div.col-sm-4
+                    div.form-group
+                      label.control-label Rapor Durumu
+                      div.input-group
+                        span.input-group-addon
+                          i.fa.fa-flag
+                        select.form-control
+                          option Onaylandı
+                          option Paraflandı
+                          option Oluşturuldu
+                          option İptal edildi
+
+            div.ibox.float-e-margins
+              div.ibox-content.border-bottom
+                table.table.table-striped
+                  thead
+                    tr
+                      th Olay Kategorisi
+                      th Hatalı Uygulama
+                      th Lokasyon
+                      th Bildiren
+                      th Bildirim Tarihi
+                  
+                  tbody
+                    tr
+                      td Laboratuvar Güvenliği
+                      td Preanalitik
+                      td Yoğun Bakım Ünitesi
+                      td Sena Çoban
+                      td 02 Mayıs, 2018
+
+                    tr
+                      td Laboratuvar Güvenliği
+                      td Preanalitik
+                      td Pembe Klinik
+                      td Sena Çoban
+                      td 02 Mayıs, 2018

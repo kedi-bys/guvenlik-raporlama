@@ -4,8 +4,6 @@ const router = express.Router()
 const category = require('./../models/category.model')
 const timeInterval = require('./../models/timeInterval.model')
 
-const dataContainer = require('./../databases/data-container')
-
 /* GET home page. */
 router.get('/', (req, res, next) => {
   res.render(
@@ -48,10 +46,6 @@ router.get('/logout', (req, res, next) => {
 
 router.post('/login', (req, res, next) => {
   res.render('/dashboard')
-})
-
-router.get('/data', (req, res, next) => {
-  res.json(dataContainer)
 })
 
 module.exports = router
