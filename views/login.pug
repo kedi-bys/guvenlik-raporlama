@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    title= title
+    title Güvenlik Raporlama Sistemi - Giriş
     link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
     link(rel='stylesheet', href='/font-awesome/css/font-awesome.css')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
@@ -22,12 +22,12 @@ html
 
         p Kullanıcı bilgileriniz ile giriş yapın.
         
-        form.m-t(role='form', action='/dashboard')
+        form.m-t(role='form', action='/login', method='post')
           div.form-group
-            input.form-control(type='text', placeholder='Kullanıcı Adı', required)
+            input.form-control(type='text', name='username', placeholder='Kullanıcı Adı', required)
           
           div.form-group
-            input.form-control(type='password', placeholder='Şifre', required)
+            input.form-control(type='password', name='password', placeholder='Şifre', required)
 
           button.btn.btn-primary.block.full-width.m-b(type='submit') Giriş
         
