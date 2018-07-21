@@ -3,6 +3,7 @@ const router = express.Router()
 
 const category = require('./../models/category.model')
 const timeInterval = require('./../models/timeInterval.model')
+const report = require('./../models/report.model')
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -30,12 +31,14 @@ router.get('/new', async (req, res, next) => {
   )
 })
 
-router.get('/reports', (req, res, next) => {
+router.get('/reports', async (req, res, next) => {
+  const reports = await report.find()
   res.render(
     'reports',
     {
       title: 'Güvenlik Raporlama Sistemi - Raporlar',
-      page: 'Reports'
+      page: 'Reports',
+      reports
     }
   )
 })

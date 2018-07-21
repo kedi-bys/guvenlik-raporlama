@@ -77,16 +77,10 @@ block content
                       th Bildirim Tarihi
                   
                   tbody
-                    tr
-                      td Laboratuvar Güvenliği
-                      td Preanalitik
-                      td Yoğun Bakım Ünitesi
-                      td Sena Çoban
-                      td 02 Mayıs, 2018
-
-                    tr
-                      td Laboratuvar Güvenliği
-                      td Preanalitik
-                      td Pembe Klinik
-                      td Sena Çoban
-                      td 02 Mayıs, 2018
+                    each report in reports
+                      tr
+                        td= report.category
+                        td= report.operation
+                        td= report.location
+                        td= report.creator
+                        td= report.date

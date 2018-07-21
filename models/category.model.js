@@ -1,8 +1,9 @@
 const mongoose = require('mongoose')
+const config = require('./../config')
 const ObjectId = mongoose.Schema.Types.ObjectId
 const Schema = mongoose.Schema
 
-mongoose.connect('mongodb://guvenlik-raporlama-app:grs-135-119@172.26.0.179:27017/guvenlik-raporlama')
+mongoose.connect(config.connectionString)
 
 const categorySchema = new Schema({
   _id: ObjectId,
