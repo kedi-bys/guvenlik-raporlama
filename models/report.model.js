@@ -14,7 +14,7 @@ const reportSchema = new Schema({
   operation: String,
   operationdetail: String,
   category: String,
-  timeinterval: Date,
+  timeinterval: String,
   staff: String,
   date: Date,
   active: Boolean,
