@@ -12,7 +12,7 @@ block content
           div.col-lg-12
             div.ibox.float-e-margins
               div.ibox-content.border-bottom
-                form.form-horizontal
+                form.form-horizontal(action='/reports/new', method='post')
                   div.form-group
                     label.col-sm-3.control-label Olay Kategorisi
                     div.col-sm-9
@@ -77,21 +77,21 @@ block content
                   div.form-group
                     label.col-sm-3.control-label Hata Özeti
                     div.col-sm-9
-                      textarea(required).form-control
+                      textarea.form-control(name='summary', required)
 
                   div.hr-line-dashed
 
                   div.form-group
                     label.col-sm-3.control-label Hata ile İlgili Açıklamalar
                     div.col-sm-9
-                      textarea(required).form-control
+                      textarea.form-control(name='description', required)
 
                   div.hr-line-dashed
 
                   div.form-group
                     label.col-sm-3.control-label Hatanın Çözümü
                     div.col-sm-9
-                      textarea(required).form-control
+                      textarea.form-control(name='solution', required)
 
                   div.hr-line-dashed
 
