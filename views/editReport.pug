@@ -14,6 +14,7 @@ block content
               div.ibox-content.border-bottom
                 form.form-horizontal(action='/reports/edit', method='post')
                   input(type="hidden" name='id' value= report._id)
+                  input(type="hidden" name='creator' value= report.creator)
                   div.form-group
                     label.col-sm-3.control-label Olay Kategorisi
                     div.col-sm-9
