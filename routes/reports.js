@@ -5,6 +5,14 @@ const category = require('./../models/category.model')
 const timeInterval = require('./../models/timeInterval.model')
 const report = require('./../models/report.model')
 
+router.use((req, res, next) => {
+  if (!req.session.user) {
+    res.redirect('/auth/login')
+  } else {
+    next()
+  }
+})
+
 router.get('/', async (req, res, next) => {
   let reports = await report.find()
   res.render(
@@ -12,7 +20,8 @@ router.get('/', async (req, res, next) => {
     {
       title: 'Güvenlik Raporlama Sistemi - Raporlar',
       page: 'Reports',
-      reports
+      reports,
+      user: req.session.user
     }
   )
 })
@@ -34,7 +43,8 @@ router.get('/edit/:id', async (req, res, next) => {
     title: 'Güvenlik Raporlama Sistemi - Reports Edit',
     report: _report,
     categories: categories,
-    timeIntervals: timeIntervals
+    timeIntervals: timeIntervals,
+    user: req.session.user
   })
 })
 router.post('/edit', async (req, res, next) => {
@@ -69,14 +79,12 @@ router.get('/new', async (req, res, next) => {
       title: 'Güvenlik Raporlama Sistemi - Yeni Rapor',
       categories: categories,
       timeIntervals: timeIntervals,
-      page: 'NewReport'
+      page: 'NewReport',
+      user: req.session.user
     }
   )
 })
 router.post('/new', async (req, res, next) => {
-  // Oturum Bilgisi Eklenecek
-  let creator = 'Deneme Personeli'
-  // -----------------------------
   let data = {
     description: req.body.description,
     summary: req.body.summary,
@@ -90,7 +98,7 @@ router.post('/new', async (req, res, next) => {
     date: req.body.date,
     active: true,
     status: 'Oluşturuldu',
-    creator: creator,
+    creator: req.session.user.displayName,
     paraphedby: null,
     approvedby: null,
     rejectedby: null,

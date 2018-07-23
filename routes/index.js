@@ -15,11 +15,17 @@ const ad = new ActiveDirectory(config)
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
+
+  if (!req.session.user) {
+    res.redirect('/auth/login')
+  }
+
   res.render(
     'dashboard',
     {
       title: 'Güvenlik Raporlama Sistemi - Kontrol Paneli',
-      page: 'ControlPanel'
+      page: 'ControlPanel',
+      user: req.session.user
     }
   )
 })

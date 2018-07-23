@@ -75,12 +75,17 @@ block content
                       th Lokasyon
                       th Bildiren
                       th Bildirim Tarihi
+                      th #
                   
                   tbody
                     each report in reports
+                      - var url = 'reports/edit/' + report._id 
                       tr
                         td= report.category
                         td= report.operation
                         td= report.location
                         td= report.creator
                         td= report.createdat
+                        td
+                          a(href='/' + url)
+                            i.fa.fa-search

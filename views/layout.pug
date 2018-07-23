@@ -23,8 +23,8 @@ html
                 a.dropdown-toggle(data-toggle='dropdown', href='#')
                   span.clear
                     span.block.m-t-xs
-                      strong.font-bold [KULLANICI_ADI]
-                    span.text-muted.text-xs.block [KULLANICI_TITLE]
+                      strong.font-bold= user.displayName
+                    //- span.text-muted.text-xs.block [KULLANICI_TITLE]
               div.logo-element GRS
               
             if page == 'ControlPanel'
@@ -61,7 +61,7 @@ html
                   span.labels Raporlar
                   
             li
-              a(href='/login')
+              a(href='/auth/login')
                 i.fa.fa-sign-out
                 span.labels Çıkış
             
