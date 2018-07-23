@@ -3,4 +3,118 @@ extends layout
 block content
   div.row.border-bottom.white-bg.dashboard-header
     div.col-md-4
-      h2 Edit Report
+      h2 Güvenlik Raporu Düzenle
+
+  div.row
+    div.col-lg-12
+      div.wrapper.wrapper-content
+        div.row
+          div.col-lg-12
+            div.ibox.float-e-margins
+              div.ibox-content.border-bottom
+                form.form-horizontal(action='/reports/edit', method='post')
+                  input(type="hidden" name='id' value= report._id)
+                  div.form-group
+                    label.col-sm-3.control-label Olay Kategorisi
+                    div.col-sm-9
+                      select.form-control(name='category')
+                        each category in categories
+                          if category.name == report.category
+                            option(selected='selected')= category.name
+                          else
+                            option= category.name
+
+                  div.hr-line-dashed
+
+                  div.form-group
+                    label.col-sm-3.control-label Gerçekleştiği Yer
+                    div.col-sm-9
+                      select.form-control(name='location')
+                        each location in categories[0].locations
+                          if location.name == report.location
+                            option(selected='selected')= location.name
+                          else
+                            option= location.name
+                  
+                  div.hr-line-dashed
+
+                  div.form-group
+                    label.col-sm-3.control-label Hata Zamanı
+                    div.col-sm-9
+                      select.form-control(name='time-interval')
+                        each timeInterval in timeIntervals
+                          if timeInterval.text == report.timeinterval
+                            option(selected='selected')= timeInterval.text
+                          else
+                            option= timeInterval.text
+
+
+                  div.hr-line-dashed
+
+                  div.form-group
+                    label.col-sm-3.control-label Hatayı Yapan Meslek Grubu
+                    div.col-sm-9
+                      select.form-control(name='occupational-group')
+                        each occupationalGroup in categories[0].occupationalGroups
+                          if occupationalGroup.name == report.staff
+                            option(selected='selected')= occupationalGroup.name
+                          else
+                            option= occupationalGroup.name
+                  
+                  div.hr-line-dashed
+
+                  div.form-group
+                    label.col-sm-3.control-label Hatalı İşlem
+                    div.col-sm-9
+                      select.form-control(name='incorrect-operation')
+                        each incorrectOperation in categories[0].incorrectOperations
+                          if incorrectOperation.name == report.operation
+                            option(selected='selected')= incorrectOperation.name
+                          else
+                            option= incorrectOperation.name
+
+                  div.hr-line-dashed
+
+                  div.form-group
+                    label.col-sm-3.control-label Hatalı İşlem Detayı
+                    div.col-sm-9
+                      select.form-control(name='incorrect-operation-detail')
+                        each incorrectOperationDetail in categories[0].incorrectOperations[0].details
+                          if incorrectOperationDetail.name == report.operationdetail
+                            option(selected='selected')= incorrectOperationDetail.name
+                          else 
+                          option= incorrectOperationDetail.name
+
+                  div.hr-line-dashed
+
+                  div.form-group
+                    label.col-sm-3.control-label Hatanın Gerçekleştiği Tarih
+                    div.col-sm-9
+                      input.form-control(type='text', name='date', value=report.date, required)
+
+                  div.hr-line-dashed
+
+                  div.form-group
+                    label.col-sm-3.control-label Hata Özeti
+                    div.col-sm-9
+                      textarea.form-control(name='summary', required)= report.summary
+
+                  div.hr-line-dashed
+
+                  div.form-group
+                    label.col-sm-3.control-label Hata ile İlgili Açıklamalar
+                    div.col-sm-9
+                      textarea.form-control(name='description', required)= report.description
+
+                  div.hr-line-dashed
+
+                  div.form-group
+                    label.col-sm-3.control-label Hatanın Çözümü
+                    div.col-sm-9
+                      textarea.form-control(name='solution', required)= report.solution
+
+                  div.hr-line-dashed
+
+                  div.form-group(style='margin-bottom: 0')
+                    div.col-sm-12
+                      input.btn.btn-primary.pull-right(type='submit', value='Güncelle & Onaya Sun')
