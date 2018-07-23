@@ -15,9 +15,8 @@ const ad = new ActiveDirectory(config)
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-
   if (!req.session.user) {
-    res.redirect('/auth/login')
+    res.redirect('/auth/login?next=' + req.originalUrl)
   }
 
   res.render(

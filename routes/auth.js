@@ -6,13 +6,18 @@ const activeDirectoryConfig = require('./../config').activeDirectoryConfig
 // GET Login
 router.get('/login', (req, res, next) => {
   let session = req.session
-  console.log(session)
 
   if (session.user) {
     res.redirect('/')
   }
 
-  res.render('login', { title: 'Güvenlik Raporlama Sistemi - Login' })
+  res.render(
+    'login',
+    {
+      title: 'Güvenlik Raporlama Sistemi - Login',
+      next: req.query.next
+    }
+  )
 })
 
 router.post('/login', (req, res, next) => {
@@ -43,10 +48,8 @@ router.post('/login', (req, res, next) => {
               name: user.givenName,
               surname: user.sn
             }
-
-            console.log('session-info:', req.session)
-
-            res.redirect('/')
+            console.log(req.body.next)
+            res.redirect(req.body.next || '/')
           }
         })
     } else {
@@ -56,7 +59,8 @@ router.post('/login', (req, res, next) => {
 })
 
 router.get('/logout', (req, res, next) => {
-  res.render('login', { title: 'Güvenlik Raporlama Sistemi - Logout' })
+  req.session.destroy((err) => { if (err) console.log(err) })
+  res.redirect('/auth/login')
 })
 
 router.post('/logout', (req, res, next) => {

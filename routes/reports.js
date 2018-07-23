@@ -7,7 +7,7 @@ const report = require('./../models/report.model')
 
 router.use((req, res, next) => {
   if (!req.session.user) {
-    res.redirect('/auth/login')
+    res.redirect('/auth/login?next=' + req.originalUrl)
   } else {
     next()
   }
