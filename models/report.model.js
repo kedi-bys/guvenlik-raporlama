@@ -20,6 +20,7 @@ const reportSchema = new Schema({
   active: Boolean,
   status: String,
   creator: String,
+  creatorId: String,
   paraphedby: String,
   approvedby: String,
   rejectedby: String,

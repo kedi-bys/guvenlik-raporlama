@@ -1,92 +1,31 @@
 const express = require('express')
 const router = express.Router()
-const ActiveDirectory = require('activedirectory')
+const report = require('./../models/report.model')
 
-const config = {
-  url: 'ldap://npi.local',
-  baseDN: 'dc=npi,dc=local'
-}
-
-// const category = require('./../models/category.model')
-// const timeInterval = require('./../models/timeInterval.model')
-// const report = require('./../models/report.model')
-
-const ad = new ActiveDirectory(config)
-
-/* GET home page. */
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
   if (!req.session.user) {
     res.redirect('/auth/login?next=' + req.originalUrl)
   }
+
+  const username = req.session.user.username
+
+  const userReports = await report.find({ creatorId: username })
+  const createdReports = await report.find({ status: { $in: ['Oluşturuldu', 'Paraflandı'] }, creatorId: username }).count()
+  const rejectedReports = await report.find({ creatorId: username, status: 'İptal edildi' }).count()
+  const approvedReports = await report.find({ creatorId: username, status: 'Onaylandı' }).count()
 
   res.render(
     'dashboard',
     {
       title: 'Güvenlik Raporlama Sistemi - Kontrol Paneli',
       page: 'ControlPanel',
-      user: req.session.user
+      user: req.session.user,
+      userReports,
+      createdReports,
+      rejectedReports,
+      approvedReports
     }
   )
-})
-
-// router.get('/reports/new', async (req, res, next) => {
-//   let categories = await category.find()
-//   let timeIntervals = await timeInterval.find()
-
-//   res.render(
-//     'newReport',
-//     {
-//       title: 'Güvenlik Raporlama Sistemi - Yeni Rapor',
-//       categories: categories,
-//       timeIntervals: timeIntervals,
-//       page: 'NewReport'
-//     }
-//   )
-// })
-
-// router.get('/reports', async (req, res, next) => {
-//   let reports = await report.find()
-//   res.render(
-//     'reports',
-//     {
-//       title: 'Güvenlik Raporlama Sistemi - Raporlar',
-//       page: 'Reports',
-//       reports
-//     }
-//   )
-// })
-
-router.get('/login', (req, res, next) => {
-  res.render('login')
-})
-
-router.post('/login', async (req, res, next) => {
-  const dc = '@npi.local'
-  const username = req.body.username
-  const password = req.body.password
-
-  ad.authenticate(username + dc, password, (err, auth) => {
-    if (err) console.log(err)
-    if (auth) {
-      const userConfig = {
-        url: config.url,
-        baseDN: config.baseDN,
-        username: username + dc,
-        password: password
-      }
-      new ActiveDirectory(userConfig)
-        .findUser(username, (err, user) => {
-          if (err) console.log(err)
-          if (!user) {
-            res.send({ status: 'Kullanıcı bilgileri alınamadı.' })
-          } else {
-            res.send(user)
-          }
-        })
-    } else {
-      res.send({ status: 'Failed' })
-    }
-  })
 })
 
 module.exports = router

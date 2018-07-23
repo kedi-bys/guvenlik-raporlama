@@ -84,6 +84,7 @@ router.get('/new', async (req, res, next) => {
     }
   )
 })
+
 router.post('/new', async (req, res, next) => {
   let data = {
     description: req.body.description,
@@ -99,6 +100,7 @@ router.post('/new', async (req, res, next) => {
     active: true,
     status: 'Oluşturuldu',
     creator: req.session.user.displayName,
+    creatorId: req.session.user.username,
     paraphedby: null,
     approvedby: null,
     rejectedby: null,

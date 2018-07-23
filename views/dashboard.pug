@@ -54,40 +54,30 @@ block content
             div.ibox.float-e-margins
               div.ibox-title
                 h5 Raporlarım
-                span.label.label-primary 2
-                span.label.label-warning 3
-                span.label.label-danger 1
+                span.label.label-primary= approvedReports
+                span.label.label-warning= createdReports
+                span.label.label-danger= rejectedReports
                 div.ibox-tools
                   a.collapse-link
                     i.fa.fa-chevron-up
               div.ibox-content
                 div
                   div.feed-activity-list
-                    div.feed-element
-                      a.pull-left(href='profile.html')
-                        img.img-circle(alt='image', src='/images/profile.jpg')
-                      div.media-body
-                        small.pull-right
-                          a.btn.btn-sm.btn-primary(href='#')
-                            i.fa.fa-search
-                        | Bir
-                        strong  [RAPOR_TURU] 
-                        | oluşturdunuz.
-                        br
-                        small 17.07.2018
-                    div.feed-element
-                      a.pull-left(href='profile.html')
-                        img.img-circle(alt='image', src='/images/a2.jpg')
-                      div.media-body
-                        small.pull-right
-                          a.btn.btn-sm.btn-primary(href='#')
-                            i.fa.fa-search
-                        | Bir
-                        strong  [RAPOR_TURU] 
-                        | oluşturdu.
-                        br
-                        small 16.07.2018
-                  button.btn.btn-primary.btn-block.m-t Daha fazla
+                    each report in userReports
+                      - var url = 'reports/edit/' + report._id 
+                      div.feed-element
+                        a.pull-left(href='profile.html')
+                          img.img-circle(alt='image', src='/images/profile.jpg')
+                        div.media-body
+                          small.pull-right
+                            a.btn.btn-sm.btn-primary(href='/' + url)
+                              i.fa.fa-search
+                          | Bir 
+                          strong= report.category
+                          |  oluşturdunuz.
+                          br
+                          small= report.createdat
+                  //- button.btn.btn-primary.btn-block.m-t Daha fazla
 
           div.col-lg-6
             div.ibox.float-e-margins
