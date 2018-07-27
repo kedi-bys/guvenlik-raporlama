@@ -22,6 +22,9 @@ html
 
         p Kullanıcı bilgileriniz ile giriş yapın.
         
+        if errorMessage
+          p.text-danger= errorMessage
+
         form.m-t(role='form', action='/auth/login', method='post')
           input(type='hidden', name='next', value=next)
           div.form-group
