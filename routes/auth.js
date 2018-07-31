@@ -7,16 +7,18 @@ const users = require('./../models/users.model')
 // GET Login
 router.get('/login', (req, res, next) => {
   let session = req.session
-
+  let errorMessage = req.session.errorMessage
   if (session.user) {
     res.redirect('/')
+    return
   }
-
+  req.session.destroy()
   res.render(
     'login',
     {
       title: 'Güvenlik Raporlama Sistemi - Login',
-      next: req.query.next
+      next: req.query.next,
+      errorMessage: errorMessage
     }
   )
 })
@@ -40,14 +42,6 @@ router.post('/login', (req, res, next) => {
           if (!user) {
             res.send({ status: 'Kullanıcı bilgileri bulunamadı.' })
           } else {
-            // kullanıcı AD içinde bulunursa session oluşturur
-            req.session.user = {
-              username: user.sAMAccountName,
-              mail: user.mail,
-              displayName: user.displayName,
-              name: user.givenName,
-              surname: user.sn
-            }
             // kullanıcı veri tabanından kontrol edilir
             let _user = null
             try {
@@ -68,12 +62,29 @@ router.post('/login', (req, res, next) => {
                   },
                   firstlogin: Date(),
                   lastlogin: Date(),
-                  prevlogin: null
+                  prevlogin: null,
+                  active: false
                 }
                 users.insertMany(data).catch((err) => {
                   console.log(err)
                 })
               } else {
+                if (_user.active === false) {
+                  req.session.errorMessage =
+                    'Sayın ' +
+                    user.displayName +
+                    ', hesabınızın aktifleştirilmesi için Bilgi İşlem ile irtibata geçiniz.'
+                  res.redirect('login')
+                  return
+                }
+                // kullanıcı AD içinde bulunursa session oluşturur
+                req.session.user = {
+                  username: user.sAMAccountName,
+                  mail: user.mail,
+                  displayName: user.displayName,
+                  name: user.givenName,
+                  surname: user.sn
+                }
                 // kulanıcı varsa son giriş tarihi düzenlenir
                 users.update({ _id: _user._id }, {$set: {prevlogin: _user.lastlogin, lastlogin: Date()}}, (err, success) => {
                   if (err) {
