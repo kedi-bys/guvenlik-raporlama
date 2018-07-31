@@ -47,6 +47,7 @@ router.get('/edit/:id', async (req, res, next) => {
     user: req.session.user
   })
 })
+
 router.post('/edit', async (req, res, next) => {
   let data = {
     description: req.body.description,
@@ -69,6 +70,13 @@ router.post('/edit', async (req, res, next) => {
   )
   res.redirect('/reports')
 })
+
+router.get('/report-fields', async (req, res, next) => {
+  let categories = await category.find()
+  let timeIntervals = await timeInterval.find()
+  res.json({ categories, timeIntervals })
+})
+
 router.get('/new', async (req, res, next) => {
   let categories = await category.find()
   let timeIntervals = await timeInterval.find()
