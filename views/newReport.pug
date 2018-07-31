@@ -3,7 +3,7 @@ extends layout
 block content
   div.row.border-bottom.white-bg.dashboard-header
     div.col-md-4
-      h2 Yeni Güvenlik Raporu
+      h2 Güvenlik Raporu Oluştur
 
   div.row
     div.col-lg-12
@@ -16,85 +16,89 @@ block content
                   div.form-group
                     label.col-sm-3.control-label Olay Kategorisi
                     div.col-sm-9
-                      select.form-control(name='category')
-                        each category in categories
-                          option= category.name
+                      select.form-control(name='category', id='category', disabled='disabled')
+                        //- each category in categories
+                        //-   option= category.name
 
                   div.hr-line-dashed
 
                   div.form-group
                     label.col-sm-3.control-label Gerçekleştiği Yer
                     div.col-sm-9
-                      select.form-control(name='location')
-                        each location in categories[0].locations
-                          option= location.name
+                      select.form-control(name='location', id='location', disabled='disabled')
+                        //- each location in categories[0].locations
+                        //-   option= location.name
                   
                   div.hr-line-dashed
 
                   div.form-group
                     label.col-sm-3.control-label Hata Zamanı
                     div.col-sm-9
-                      select.form-control(name='time-interval')
-                        each timeInterval in timeIntervals
-                          option= timeInterval.text
+                      select.form-control(name='time-interval', id='time-interval', disabled='disabled')
+                        //- each timeInterval in timeIntervals
+                        //-   option= timeInterval.text
 
                   div.hr-line-dashed
 
                   div.form-group
                     label.col-sm-3.control-label Hatayı Yapan Meslek Grubu
                     div.col-sm-9
-                      select.form-control(name='occupational-group')
-                        each occupationalGroup in categories[0].occupationalGroups
-                          option= occupationalGroup.name
+                      select.form-control(name='occupational-group', id='occupational-group', disabled='disabled')
+                        //- each occupationalGroup in categories[0].occupationalGroups
+                        //-   option= occupationalGroup.name
                   
                   div.hr-line-dashed
 
                   div.form-group
                     label.col-sm-3.control-label Hatalı İşlem
                     div.col-sm-9
-                      select.form-control(name='incorrect-operation')
-                        each incorrectOperation in categories[0].incorrectOperations
-                          option= incorrectOperation.name
+                      select.form-control(name='incorrect-operation', id='incorrect-operation', disabled='disabled')
+                        //- each incorrectOperation in categories[0].incorrectOperations
+                        //-   option= incorrectOperation.name
 
                   div.hr-line-dashed
 
                   div.form-group
                     label.col-sm-3.control-label Hatalı İşlem Detayı
                     div.col-sm-9
-                      select.form-control(name='incorrect-operation-detail')
-                        each incorrectOperationDetail in categories[0].incorrectOperations[0].details
-                          option= incorrectOperationDetail.name
+                      select.form-control(name='incorrect-operation-detail', id='incorrect-operation-detail', disabled='disabled')
+                        //- each incorrectOperationDetail in categories[0].incorrectOperations[0].details
+                        //-   option= incorrectOperationDetail.name
 
                   div.hr-line-dashed
 
                   div.form-group
                     label.col-sm-3.control-label Hatanın Gerçekleştiği Tarih
                     div.col-sm-9
-                      input.form-control(type='text', name='date', required)
+                      input.form-control(type='date', name='date', id='date', required, disabled='disabled')
 
                   div.hr-line-dashed
 
                   div.form-group
                     label.col-sm-3.control-label Hata Özeti
                     div.col-sm-9
-                      textarea.form-control(name='summary', required)
+                      textarea.form-control(name='summary', id='summary', required, disabled='disabled')
 
                   div.hr-line-dashed
 
                   div.form-group
                     label.col-sm-3.control-label Hata ile İlgili Açıklamalar
                     div.col-sm-9
-                      textarea.form-control(name='description', required)
+                      textarea.form-control(name='description', id='description', required, disabled='disabled')
 
                   div.hr-line-dashed
 
                   div.form-group
                     label.col-sm-3.control-label Hatanın Çözümü
                     div.col-sm-9
-                      textarea.form-control(name='solution', required)
+                      textarea.form-control(name='solution', id='solution', required, disabled='disabled')
 
                   div.hr-line-dashed
 
                   div.form-group(style='margin-bottom: 0')
                     div.col-sm-12
-                      input.btn.btn-primary.pull-right(type='submit', value='Onaya Sun')
+                      input.btn.btn-primary.pull-right(type='submit', id='submit-btn', value='Onaya Sun', disabled='disabled')
+
+block scripts
+  script(src='/javascripts/plugins/underscore/underscore.min.js')
+  script(src='/javascripts/pages/new-report.js')
