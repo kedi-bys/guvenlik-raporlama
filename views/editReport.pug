@@ -18,31 +18,23 @@ block content
                   div.form-group
                     label.col-sm-3.control-label Olay Kategorisi
                     div.col-sm-9
-                      select.form-control(name='category')
-                        each category in categories
-                          if category.name == report.category
-                            option(selected='selected')= category.name
-                          else
-                            option= category.name
+                      select.form-control(name='category', id='category', disabled='disabled')
+                        option(selected='selected')= report.category
 
                   div.hr-line-dashed
 
                   div.form-group
                     label.col-sm-3.control-label Gerçekleştiği Yer
                     div.col-sm-9
-                      select.form-control(name='location')
-                        each location in categories[0].locations
-                          if location.name == report.location
-                            option(selected='selected')= location.name
-                          else
-                            option= location.name
+                      select.form-control(name='location', id='location', disabled='disabled')
+                        option(selected='selected')= report.location
                   
                   div.hr-line-dashed
 
                   div.form-group
                     label.col-sm-3.control-label Hata Zamanı
                     div.col-sm-9
-                      select.form-control(name='time-interval')
+                      select.form-control(name='time-interval', id='time-interval', disabled='disabled')
                         each timeInterval in timeIntervals
                           if timeInterval.text == report.timeinterval
                             option(selected='selected')= timeInterval.text
@@ -55,67 +47,59 @@ block content
                   div.form-group
                     label.col-sm-3.control-label Hatayı Yapan Meslek Grubu
                     div.col-sm-9
-                      select.form-control(name='occupational-group')
-                        each occupationalGroup in categories[0].occupationalGroups
-                          if occupationalGroup.name == report.staff
-                            option(selected='selected')= occupationalGroup.name
-                          else
-                            option= occupationalGroup.name
+                      select.form-control(name='occupational-group', id='occupational-group', disabled='disabled')
+                        option(selected='selected')= report.staff
                   
                   div.hr-line-dashed
 
                   div.form-group
                     label.col-sm-3.control-label Hatalı İşlem
                     div.col-sm-9
-                      select.form-control(name='incorrect-operation')
-                        each incorrectOperation in categories[0].incorrectOperations
-                          if incorrectOperation.name == report.operation
-                            option(selected='selected')= incorrectOperation.name
-                          else
-                            option= incorrectOperation.name
+                      select.form-control(name='incorrect-operation', id='incorrect-operation', disabled='disabled')
+                        option(selected='selected')= report.operation
 
                   div.hr-line-dashed
 
                   div.form-group
                     label.col-sm-3.control-label Hatalı İşlem Detayı
                     div.col-sm-9
-                      select.form-control(name='incorrect-operation-detail')
-                        each incorrectOperationDetail in categories[0].incorrectOperations[0].details
-                          if incorrectOperationDetail.name == report.operationdetail
-                            option(selected='selected')= incorrectOperationDetail.name
-                          else 
-                          option= incorrectOperationDetail.name
+                      select.form-control(name='incorrect-operation-detail', id='incorrect-operation-detail', disabled='disabled')
+                        option(selected='selected')= report.operationdetail
 
                   div.hr-line-dashed
 
                   div.form-group
                     label.col-sm-3.control-label Hatanın Gerçekleştiği Tarih
                     div.col-sm-9
-                      input.form-control(type='text', name='date', value=report.date, required)
+                      input.form-control(type='text', name='date', value=report.date, required, disabled='disabled')
 
                   div.hr-line-dashed
 
                   div.form-group
                     label.col-sm-3.control-label Hata Özeti
                     div.col-sm-9
-                      textarea.form-control(name='summary', required)= report.summary
+                      textarea.form-control(name='summary', required, disabled='disabled')= report.summary
 
                   div.hr-line-dashed
 
                   div.form-group
                     label.col-sm-3.control-label Hata ile İlgili Açıklamalar
                     div.col-sm-9
-                      textarea.form-control(name='description', required)= report.description
+                      textarea.form-control(name='description', required, disabled='disabled')= report.description
 
                   div.hr-line-dashed
 
                   div.form-group
                     label.col-sm-3.control-label Hatanın Çözümü
                     div.col-sm-9
-                      textarea.form-control(name='solution', required)= report.solution
+                      textarea.form-control(name='solution', required, disabled='disabled')= report.solution
 
                   div.hr-line-dashed
 
                   div.form-group(style='margin-bottom: 0')
                     div.col-sm-12
-                      input.btn.btn-primary.pull-right(type='submit', value='Güncelle & Onaya Sun')
+                      input.btn.btn-primary.pull-right(type='submit', value='Güncelle & Onaya Sun', disabled='disabled')
+
+block scripts
+  script(src='/javascripts/plugins/underscore/underscore.min.js')
+  script(src='/javascripts/pages/edit-report.js')
