@@ -14,7 +14,8 @@ const userSchema = new Schema({
   role: { name: String, privilege: Number },
   firstlogin: Date,
   lastlogin: Date,
-  prevlogin: Date
+  prevlogin: Date,
+  active: Boolean
 })
 
 const userModel = mongoose.model('Users', userSchema, 'users')
