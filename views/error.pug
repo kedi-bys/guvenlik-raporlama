@@ -1,6 +1,22 @@
-//- extends layout
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/font-awesome/css/font-awesome.css')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(charset='utf-8')
+    
+    link(rel='stylesheet', href='/stylesheets/animate.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
 
-block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+body.gray-bg
+  div.middle-box.text-center.animated.fadeInDown(style='max-width: 90%')
+    h1= error.status
+    h3.font-bold= message
+
+    div.error-desc(style='margin-top: 24px')
+      pre(style='text-align: left') #{error.stack}
+
+  script(src='/javascripts/jquery-3.1.1.min.js')
+  script(src='/javascripts/bootstrap.min.js')
