@@ -4,3 +4,32 @@ block content
   div.row.border-bottom.white-bg.dashboard-header
     div.col-md-4
       h2 Impersonate
+
+  div.wrapper.wrapper-content
+    div.row
+      div.col-lg-12
+        div.ibox.float-e-margins
+          div.ibox-title
+            h5 Kullanıcılar
+          div.ibox-content
+            //- div.table-responsive
+            table.table#users-table(style='width: 100%')
+              thead
+                tr
+                  th Kullanıcı Adı
+                  th Ad Soyad
+                  th Mail
+                  th Yetki
+                  th Durum
+              tbody
+                each adUser in adUsers
+                  tr
+                    td #{adUser.username}
+                    td #{adUser.displayname}
+                    td #{adUser.mail}
+                    td #{adUser.role.name}
+                    td #{adUser.active ? 'Aktif' : 'Pasif'}
+
+block scripts
+  script(src='/javascripts/plugins/dataTables/datatables.min.js')
+  script(src='/javascripts/pages/impersonate.js')

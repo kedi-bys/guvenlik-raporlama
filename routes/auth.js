@@ -1,8 +1,13 @@
 const express = require('express')
 const router = express.Router()
-const login = require('./../helpers/authentication')
+const createError = require('http-errors')
 
-// GET Login
+const {
+  login,
+  fetchUsers,
+  impersonate
+} = require('./../helpers/authentication')
+
 router.get('/login', (req, res, next) => {
   let session = req.session
   let errorMessage = req.session.errorMessage
@@ -47,8 +52,23 @@ router.post('/logout', (req, res, next) => {
   res.render('login', { title: 'Güvenlik Raporlama Sistemi - Logout' })
 })
 
-router.get('/impersonate', (req, res, next) => {
-  res.render('impersonate', { title: 'Güvenlik Raporlama Sistemi - Impersonate' })
+router.get('/impersonate', async (req, res, next) => {
+  if (!req.session.user) {
+    res.redirect('/auth/login?next=' + req.originalUrl)
+    return
+  }
+
+  const adUsers = await fetchUsers()
+  if (adUsers.status === 'Failed') {
+    next(createError(500))
+    return
+  }
+
+  res.render('impersonate', {
+    title: 'Güvenlik Raporlama Sistemi - Impersonate',
+    user: req.session.user,
+    adUsers: adUsers.adUsers
+  })
 })
 
 router.post('/impersonate', (req, res, next) => {

@@ -2,6 +2,76 @@ const ActiveDirectory = require('activedirectory')
 const config = require('./../config')
 const users = require('./../models/users.model')
 
+const fetchUsers = async () => {
+  let adUsers = null
+  try {
+    adUsers = await users.find()
+  } catch (ex) {
+    return {
+      status: 'Failed',
+      errorMessage: `Kullanıcılar çekilirken bir hata oluştu.`,
+      errorDetail: ex
+    }
+  }
+  return {
+    status: 'Success',
+    adUsers
+  }
+}
+
+const syncUsers = async (username, password) => {
+  let cfg = config.activeDirectoryConfig
+  let ad = new ActiveDirectory(cfg)
+  let adUsers = null
+  let authenticated = false
+
+  // Verilen kullanıcı adı ve şifreyle activedirectory'de giriş yapmayı dene.
+  try {
+    authenticated = await (new Promise((resolve, reject) => {
+      ad.authenticate(username + cfg.dc, password, (err, auth) => {
+        if (err) reject(err)
+        else resolve(auth)
+      })
+    }))
+  } catch (ex) {
+    return {
+      status: 'Failed',
+      errorMessage: `Giriş yapılamadı. Kullanıcı bilgilerini kontrol edin.`,
+      errorDetail: ex
+    }
+  }
+
+  if (!authenticated) {
+    return {
+      status: 'Failed',
+      errorMessage: `Giriş yapılamadı. Kullanıcı bilgilerini kontrol edin.`
+    }
+  }
+
+  // Kullanıcı bilgilerini çekmek için config'e sorgu atacak kullanıcı bilgisi
+  // eklendi.
+  cfg.username = username + cfg.dc
+  cfg.password = password
+  ad = new ActiveDirectory(cfg)
+
+  try {
+    adUsers = await (new Promise((resolve, reject) => {
+      ad.findUsers('', (err, user) => {
+        if (err) reject(err)
+        else resolve(user)
+      })
+    }))
+  } catch (ex) {
+    return {
+      status: 'Failed',
+      errorMessage: `Active Directory'den kullanıcı bilgilerini çekerken bir 
+      hata oluştu.`,
+      errorDetail: ex
+    }
+  }
+  populateUsersDatabase(adUsers)
+}
+
 const login = async (username, password) => {
   let cfg = config.activeDirectoryConfig
   let ad = new ActiveDirectory(cfg)
@@ -78,6 +148,30 @@ const login = async (username, password) => {
   }
 }
 
+const impersonate = async (username) => {
+  let user = null
+  try {
+    user = users.find({ username: username })
+  } catch (ex) {
+    return {
+      status: 'Failed',
+      errorMessage: `Giriş yapılamadı. Kullanıcı bilgilerini kontrol edin.`,
+      errorDetail: ex
+    }
+  }
+
+  return {
+    status: 'Success',
+    user: {
+      username: user.sAMAccountName,
+      mail: user.mail,
+      displayName: user.displayName,
+      name: user.givenName,
+      surname: user.sn
+    }
+  }
+}
+
 const checkUser = async (user) => {
   // Kullanıcının veri tabanında kaydı olup olmadığını kontrol et.
   let userRecord = await users.findOne({ 'username': user.sAMAccountName })
@@ -150,4 +244,17 @@ const createUserJson = user => {
   }
 }
 
-module.exports = login
+const populateUsersDatabase = async users => {
+  let validUsers = users
+    .filter(u => ['512', '66048', '16'].indexOf(u.userAccountControl) !== -1)
+
+  for (let user of validUsers) {
+    await checkUser(user)
+  }
+}
+module.exports = {
+  login,
+  syncUsers,
+  fetchUsers,
+  impersonate
+}
