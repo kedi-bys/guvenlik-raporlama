@@ -12,7 +12,7 @@ router.get('/login', (req, res, next) => {
   let session = req.session
   let errorMessage = req.session.errorMessage
   if (session.user) {
-    res.redirect('/')
+    res.redirect('/reports/dashboard')
     return
   }
   req.session.destroy()
@@ -35,7 +35,7 @@ router.post('/login', async (req, res, next) => {
   if (auth.status === 'Success') {
     // Login başarılıysa kullanıcı bilgileriyle session oluştur.
     req.session.user = auth.user
-    res.redirect(req.body.next || '/')
+    res.redirect(req.body.next || '/reports/dashboard')
   } else if (auth.status === 'Failed') {
     // Bir hata meydana gelmişse session'a hata mesajı ekle.
     req.session.errorMessage = auth.errorMessage
@@ -58,6 +58,11 @@ router.get('/impersonate', async (req, res, next) => {
     return
   }
 
+  if (req.session.user.role.privilege < 4) {
+    next(createError(401))
+    return
+  }
+
   const adUsers = await fetchUsers()
   if (adUsers.status === 'Failed') {
     next(createError(500))
@@ -66,6 +71,7 @@ router.get('/impersonate', async (req, res, next) => {
 
   res.render('impersonate', {
     title: 'Güvenlik Raporlama Sistemi - Impersonate',
+    page: 'Impersonate',
     user: req.session.user,
     adUsers: adUsers.adUsers
   })
