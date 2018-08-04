@@ -23,20 +23,32 @@ html
                 a.dropdown-toggle(data-toggle='dropdown', href='#')
                   span.clear
                     span.block.m-t-xs
-                      strong.font-bold= user.displayName
+                      strong.font-bold= user.displayname
                     //- span.text-muted.text-xs.block [KULLANICI_TITLE]
               div.logo-element GRS
               
             if page == 'ControlPanel'
               li.active
-                a(href='/')
+                a(href='/reports/dashboard')
                   i.fa.fa-th-large
                   span.labels Kontrol Paneli
             else
               li
-                a(href='/')
+                a(href='/reports/dashboard')
                   i.fa.fa-th-large
                   span.labels Kontrol Paneli
+
+            if user.role.privilege > 3
+              if page == 'AdminPanel'
+                li.active
+                  a(href='/reports/admin')
+                    i.fa.fa-user-md
+                    span.labels Yönetici Paneli
+              else
+                li
+                  a(href='/reports/admin')
+                    i.fa.fa-user-md
+                    span.labels Yönetici Paneli
 
             if page == 'NewReport'
               li.active
@@ -51,15 +63,27 @@ html
 
             if page == 'Reports'
               li.active
-                a(href='/reports')
+                a(href='/reports/all')
                   i.fa.fa-table
                   span.labels Raporlar
             else
               li
-                a(href='/reports')
+                a(href='/reports/all')
                   i.fa.fa-table
                   span.labels Raporlar
-                  
+
+            if user.role.privilege > 3
+              if page == 'Impersonate'
+                li.active
+                  a(href='/auth/impersonate')
+                    i.fa.fa-users
+                    span.labels Kullanıcı Değiştir
+              else
+                li
+                  a(href='/auth/impersonate')
+                    i.fa.fa-users
+                    span.labels Kullanıcı Değiştir
+
             li
               a(href='/auth/logout')
                 i.fa.fa-sign-out
