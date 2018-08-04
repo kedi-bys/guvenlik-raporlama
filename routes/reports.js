@@ -6,15 +6,67 @@ const timeInterval = require('./../models/timeInterval.model')
 const report = require('./../models/report.model')
 
 router.use((req, res, next) => {
+  let nextUrl = req.originalUrl === '/'
+    ? '/reports/dashboard'
+    : req.originalUrl
+
   if (!req.session.user) {
-    res.redirect('/auth/login?next=' + req.originalUrl)
+    res.redirect('/auth/login?next=' + nextUrl)
   } else {
     next()
   }
 })
 
-router.get('/', async (req, res, next) => {
-  let reports = await report.find()
+router.get('/dashboard', async (req, res, next) => {
+  const username = req.session.user.username
+  const userReports = await report.find({ creatorId: username })
+
+  const notApprovedReportCount = await report.find({
+    status: {
+      $in: ['Oluşturuldu', 'Paraflandı']
+    },
+    creatorId: username
+  }).count()
+
+  const rejectedReportCount = await report.find({
+    status: 'İptal edildi',
+    creatorId: username
+  }).count()
+
+  const approvedReportCount = await report.find({
+    status: 'Onaylandı',
+    creatorId: username
+  })
+
+  res.render(
+    'dashboard',
+    {
+      title: 'Güvenlik Raporlama Sistemi - Raporlar',
+      page: 'ControlPanel',
+      user: req.session.user,
+      userReports,
+      notApprovedReportCount,
+      rejectedReportCount,
+      approvedReportCount
+    }
+  )
+})
+
+router.get('/admin', async (req, res, next) => {
+  if (req.session.user.role.privilege < 4) {
+    next(createError(401))
+    return
+  }
+
+  res.render('admin', {
+    title: 'Güvenlik Raporlama Sistemi - Yönetici Paneli',
+    page: 'AdminPanel',
+    user: req.session.user
+  })
+})
+
+router.get('/all', async (req, res, next) => {
+  const reports = await report.find()
   res.render(
     'reports',
     {
@@ -24,10 +76,6 @@ router.get('/', async (req, res, next) => {
       user: req.session.user
     }
   )
-})
-
-router.post('/', async (req, res, next) => {
-  res.render('reports', { title: 'Güvenlik Raporlama Sistemi - Reports' })
 })
 
 router.get('/edit/:id', async (req, res, next) => {
