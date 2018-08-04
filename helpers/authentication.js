@@ -136,15 +136,11 @@ const login = async (username, password) => {
     return userCheckInfo
   }
 
+  const user = await users.findOne({ username: adUser.sAMAccountName })
+
   return {
     status: 'Success',
-    user: {
-      username: adUser.sAMAccountName,
-      mail: adUser.mail,
-      displayName: adUser.displayName,
-      name: adUser.givenName,
-      surname: adUser.sn
-    }
+    user
   }
 }
 
